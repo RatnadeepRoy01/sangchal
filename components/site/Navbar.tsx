@@ -20,7 +20,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="container relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm transition-transform group-hover:scale-105">
@@ -67,26 +67,36 @@ export default function Navbar() {
         </div>
 
         {open && (
-          <div className="md:hidden pb-5 pt-2 space-y-1 border-t border-border/60">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className={cn(
-                  'block px-4 py-3 rounded-lg text-sm font-medium',
-                  pathname === l.href ? 'bg-primary/10 text-primary' : 'text-foreground/80 hover:bg-secondary'
-                )}
-              >
-                {l.label}
-              </Link>
-            ))}
-            <Button asChild className="w-full mt-2 rounded-full bg-primary hover:bg-primary/90">
-              <Link href="/donate" onClick={() => setOpen(false)}>
-                <Heart className="h-4 w-4 mr-2" /> Donate Now
-              </Link>
-            </Button>
-          </div>
+          <>
+            <button
+              type="button"
+              className="fixed inset-0 top-20 z-40 bg-foreground/20 md:hidden"
+              onClick={() => setOpen(false)}
+              aria-label="Close menu"
+            />
+            <div className="absolute inset-x-0 top-full z-50 md:hidden border-b border-border/60 bg-background/95 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/90">
+              <div className="space-y-1 px-4 pb-5 pt-2 sm:px-6 lg:px-8">
+                {links.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      'block rounded-lg px-4 py-3 text-sm font-medium',
+                      pathname === l.href ? 'bg-primary/10 text-primary' : 'text-foreground/80 hover:bg-secondary'
+                    )}
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+                <Button asChild className="mt-2 w-full rounded-full bg-primary hover:bg-primary/90">
+                  <Link href="/donate" onClick={() => setOpen(false)}>
+                    <Heart className="mr-2 h-4 w-4" /> Donate Now
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </header>

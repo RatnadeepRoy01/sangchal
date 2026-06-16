@@ -192,37 +192,48 @@ export default function AboutPage() {
           </div>
 
           {/* Leadership */}
-          <div className="mb-14">
-            <h3 className="font-serif-display text-2xl font-semibold text-center mb-8">Our Leadership</h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { name: 'Dr. Ananya Iyer', role: 'Founder &amp; Executive Director', bio: 'Obstetrician turned activist. Founded Sangchal in 2009 after a decade in rural healthcare.', initials: 'AI', tone: 'from-[hsl(6_65%_55%)] to-[hsl(6_65%_38%)]' },
-                { name: 'Vikram Bhattacharya', role: 'Chief Operating Officer', bio: 'Former public-policy advisor. Architect of our 14-state field operations.', initials: 'VB', tone: 'from-[hsl(232_45%_55%)] to-[hsl(232_50%_38%)]' },
-                { name: 'Rukhsana Sheikh', role: 'Director, Programs', bio: 'Two decades in child rights. Leads education and nutrition initiatives.', initials: 'RS', tone: 'from-[hsl(28_70%_55%)] to-[hsl(28_70%_40%)]' },
-                { name: 'Kavita Rao', role: 'Director, Women Empowerment', bio: 'Survivor and award-winning social entrepreneur. Built our 320 self-help groups.', initials: 'KR', tone: 'from-[hsl(340_55%_55%)] to-[hsl(340_55%_38%)]' },
-              ].map((m) => (
-                <Card key={m.name} className="border-border/60 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className={`aspect-square bg-gradient-to-br ${m.tone} flex items-center justify-center relative`}>
-                    <span className="font-serif-display text-6xl font-bold text-white/95 drop-shadow-sm">{m.initials}</span>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
-                  </div>
-                  <CardContent className="p-5">
-                    <h4 className="font-serif-display text-xl font-semibold" dangerouslySetInnerHTML={{__html: m.name}} />
-                    <p className="text-sm text-primary font-medium mt-0.5" dangerouslySetInnerHTML={{__html: m.role}} />
-                    <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{m.bio}</p>
-                    <div className="mt-4 flex items-center gap-2">
-                      <a href="#" className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" aria-label="LinkedIn">
-                        <FaLinkedin className="h-3.5 w-3.5" />
-                      </a>
-                      <a href="#" className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" aria-label="Email">
-                        <Mail className="h-3.5 w-3.5" />
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+          
+<div className="mb-14">
+  <h3 className="font-serif-display text-2xl font-semibold text-center mb-8">Our Leadership</h3>
+  <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {[
+      { name: 'Dr. Ananya Iyer', role: 'Founder & Executive Director', bio: 'Obstetrician turned activist. Founded Sangchal in 2009 after a decade in rural healthcare.', initials: 'AI', tone: 'from-[hsl(6_65%_55%)] to-[hsl(6_65%_38%)]' },
+      { name: 'Vikram Bhattacharya', role: 'Chief Operating Officer', bio: 'Former public-policy advisor. Architect of our 14-state field operations.', initials: 'VB', tone: 'from-[hsl(232_45%_55%)] to-[hsl(232_50%_38%)]' },
+      { name: 'Rukhsana Sheikh', role: 'Director, Programs', bio: 'Two decades in child rights. Leads education and nutrition initiatives.', initials: 'RS', tone: 'from-[hsl(28_70%_55%)] to-[hsl(28_70%_40%)]' },
+      { name: 'Kavita Rao', role: 'Director, Women Empowerment', bio: 'Survivor and award-winning social entrepreneur. Built our 320 self-help groups.', initials: 'KR', tone: 'from-[hsl(340_55%_55%)] to-[hsl(340_55%_38%)]' },
+    ].map((m) => (
+      <div key={m.name} className="flex flex-col items-center text-center">
+        {/* Circle avatar — shown on mobile (sm:hidden), hidden on sm+ where the card takes over */}
+        <div className={`sm:hidden w-28 h-28 rounded-full bg-gradient-to-br ${m.tone} flex items-center justify-center mb-3 shadow-sm`}>
+          <span className="font-serif-display text-3xl font-bold text-white/95">{m.initials}</span>
+        </div>
+        <p className="sm:hidden font-serif-display text-sm font-semibold leading-tight">{m.name}</p>
+        <p className="sm:hidden text-xs text-primary font-medium mt-0.5 leading-tight">{m.role}</p>
+
+        {/* Full card — hidden on mobile, shown on sm+ */}
+        <Card className="hidden sm:block w-full border-border/60 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+          <div className={`aspect-square bg-gradient-to-br ${m.tone} flex items-center justify-center relative`}>
+            <span className="font-serif-display text-6xl font-bold text-white/95 drop-shadow-sm">{m.initials}</span>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
           </div>
+          <CardContent className="p-5">
+            <h4 className="font-serif-display text-xl font-semibold">{m.name}</h4>
+            <p className="text-sm text-primary font-medium mt-0.5">{m.role}</p>
+            <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{m.bio}</p>
+            <div className="mt-4 flex items-center gap-2">
+              <a href="#" className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" aria-label="LinkedIn">
+                <FaLinkedin className="h-3.5 w-3.5" />
+              </a>
+              <a href="#" className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" aria-label="Email">
+                <Mail className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    ))}
+  </div>
+</div>
 
           {/* Board of Trustees */}
           <div>
