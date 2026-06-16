@@ -1,10 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState } from 'react'
 import { Calendar, MapPin, Users, Heart, ArrowRight, Filter } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
+import { cn } from '@/lib/utils'
 
 const IMG_MAT = 'https://images.unsplash.com/photo-1534818113099-dbe2b2e800ae?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwxfHxtb3RoZXIlMjBjaGlsZCUyMHdlbGZhcmV8ZW58MHx8fHwxNzgxNjEwMzMyfDA&ixlib=rb-4.1.0&q=85'
 const IMG_EDU = 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwzfHxlZHVjYXRpb24lMjBjaGlsZHJlbnxlbnwwfHx8fDE3ODE2MTAzMzh8MA&ixlib=rb-4.1.0&q=85'
@@ -25,6 +29,13 @@ const campaigns = [
 const filters = ['All', 'Maternal Health', 'Education', 'Empowerment', 'Nutrition', 'Emergency']
 
 export default function CampaignsPage() {
+  const [activeFilter, setActiveFilter] = useState('All')
+
+  const filteredCampaigns =
+    activeFilter === 'All'
+      ? campaigns
+      : campaigns.filter((c) => c.tag === activeFilter)
+
   return (
     <div>
       {/* HEADER */}
@@ -44,8 +55,18 @@ export default function CampaignsPage() {
             <div className="flex items-center gap-2 text-sm text-muted-foreground mr-2">
               <Filter className="h-4 w-4" /> Filter:
             </div>
-            {filters.map((f, i) => (
-              <button key={f} className={`rounded-full px-4 py-1.5 text-sm font-medium border transition-colors ${i===0 ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground/75 border-border hover:bg-secondary'}`}>
+            {filters.map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setActiveFilter(f)}
+                className={cn(
+                  'rounded-full border px-4 py-1.5 text-sm font-medium transition-colors',
+                  activeFilter === f
+                    ? 'border-primary bg-primary text-primary-foreground'
+                    : 'border-border bg-card text-foreground/75 hover:bg-secondary'
+                )}
+              >
                 {f}
               </button>
             ))}
@@ -57,7 +78,12 @@ export default function CampaignsPage() {
       <section className="py-16 lg:py-20">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
-            {campaigns.map((c) => (
+            {filteredCampaigns.length === 0 ? (
+              <p className="col-span-full py-12 text-center text-muted-foreground">
+                No campaigns found for this category.
+              </p>
+            ) : (
+              filteredCampaigns.map((c) => (
               <Card key={c.title} className="group overflow-hidden border-border/60 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <div className="relative aspect-[5/4] overflow-hidden">
                   <Image src={c.img} alt={c.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -93,7 +119,8 @@ export default function CampaignsPage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
