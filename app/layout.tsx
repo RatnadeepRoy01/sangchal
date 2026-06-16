@@ -1,29 +1,25 @@
-import { Geist, Geist_Mono } from "next/font/google"
+import './globals.css'
+// import { Providers } from './providers'
+import Navbar from '@/components/site/Navbar'
+import Footer from '@/components/site/Footer'
 
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+export const metadata = {
+  title: 'Sangchal — Women & Child Welfare NGO',
+  description: 'Sangchal is a non-profit dedicated to maternal health, child education, and women empowerment. Join us in building stronger communities.',
+}
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
-
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children } : { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
-    >
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{__html:'window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);'}} />
+      </head>
+      <body className="min-h-screen flex flex-col">
+        {/* <Providers> */}
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        {/* </Providers> */}
       </body>
     </html>
   )
